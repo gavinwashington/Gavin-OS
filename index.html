@@ -35,201 +35,613 @@ body{background:#17131f;color:#fff;font-family:Arial,Helvetica,sans-serif}
 #bar{height:100%;width:0;background:#fff}.pct{margin-top:12px;opacity:.7}
 #welcomeText{font-size:clamp(28px,5vw,64px);opacity:0;transition:opacity 2.3s}
 .warning{color:#70ff91;font-weight:700;font-size:15px;max-width:760px;margin:15px auto 0;text-align:center}
+
+/* Touchscreen support */
+.nav,.app,.item,.row,.sw{cursor:pointer;touch-action:manipulation}
+.nav:active,.app:active,.item:active,.row:active,.sw:active{filter:brightness(1.3)}
+input{touch-action:manipulation}
+
+@media(max-width:700px){
+ .screen{padding:22px 18px}
+ .layout{grid-template-columns:115px 1fr;gap:12px}
+ .grid{grid-template-columns:repeat(2,minmax(110px,1fr))}
+ .app{height:95px;padding:10px}
+ .icon{font-size:30px}
+ .name{font-size:14px;margin-top:8px}
+ .brand{font-size:23px}
+ .hero{padding:16px;height:auto;min-height:110px}
+ .hero h1{font-size:25px}
+ .list{width:min(500px,90vw)}
+ .foot{left:18px;font-size:11px}
+ .row{padding:14px}
+ .sw{width:65px;height:55px}
+}
 </style>
 </head>
 <body>
 
-<section id="loading" class="screen on"><div>Gavin OS</div><div class="barbox"><div id="bar"></div></div><div id="pct" class="pct">0%</div></section>
-<section id="welcome" class="screen"><div id="welcomeText">Welcome to Gavin OS</div></section>
+<section id="loading" class="screen on">
+ <div>Gavin OS</div>
+ <div class="barbox"><div id="bar"></div></div>
+ <div id="pct" class="pct">0%</div>
+</section>
+
+<section id="welcome" class="screen">
+ <div id="welcomeText">Welcome to Gavin OS</div>
+</section>
 
 <section id="setup" class="screen">
-<div class="brand">GAVIN OS <span id="setupLabel">• Language</span></div>
-<div style="text-align:center;margin-top:12vh"><h1 id="startTitle" style="font-size:42px;font-weight:400">Let's get started</h1>
-<div class="warning">TouchScreen Works! And PC Keyboards also work check out the controls file on our github page</div>
-<div id="langs" class="list" style="margin:28px auto 0"></div></div>
+ <div class="brand">GAVIN OS <span id="setupLabel">• Language</span></div>
+ <div style="text-align:center;margin-top:12vh">
+  <h1 id="startTitle" style="font-size:42px;font-weight:400">Let's get started</h1>
+  <div class="warning">TouchScreen Works! And PC Keyboards also work check out the controls file on our github page</div>
+  <div id="langs" class="list" style="margin:28px auto 0"></div>
+ </div>
 </section>
 
 <section id="home" class="screen">
-<div class="head"><div class="brand">GAVIN OS <span id="homeLabel">Home</span></div><div style="display:flex;flex-direction:column;align-items:flex-end;line-height:1.2"><div id="day" class="clock"></div><div id="clock" class="clock"></div></div></div>
-<div class="layout">
-<aside class="rail" id="rail"><div class="nav sel" id="navHome">Home</div><div class="nav" id="navSearch">Search</div><div class="nav" id="navSettings">Settings</div><div class="nav" id="navFollow">FOLLOW ME</div></aside>
-<main class="content">
-<div class="hero"><h1 id="heroTitle">Welcome to Gavin OS</h1><p id="heroSub">Your apps, your way.</p></div>
-<div class="section" id="appsTitle">My Apps</div><div id="apps" class="grid"></div>
-</main>
-</div>
-<div class="foot">← → ↑ ↓ Navigate • Enter Open • Home = Home</div>
+ <div class="head">
+  <div class="brand">GAVIN OS <span id="homeLabel">Home</span></div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;line-height:1.2">
+   <div id="day" class="clock"></div>
+   <div id="clock" class="clock"></div>
+  </div>
+ </div>
+ <div class="layout">
+  <aside class="rail" id="rail">
+   <div class="nav sel" id="navHome">Home</div>
+   <div class="nav" id="navSearch">Search</div>
+   <div class="nav" id="navSettings">Settings</div>
+   <div class="nav" id="navFollow">FOLLOW ME</div>
+  </aside>
+  <main class="content">
+   <div class="hero">
+    <h1 id="heroTitle">Welcome to Gavin OS</h1>
+    <p id="heroSub">Your apps, your way.</p>
+   </div>
+   <div class="section" id="appsTitle">My Apps</div>
+   <div id="apps" class="grid"></div>
+  </main>
+ </div>
+ <div class="foot">← → ↑ ↓ Navigate • Enter Open • Home = Home</div>
 </section>
 
 <section id="search" class="screen">
  <div class="brand">GAVIN OS <span>Search</span></div>
  <h1>Search</h1>
  <div style="max-width:850px">
-   <input id="searchInput" autofocus autocomplete="off" placeholder="Type an app name..."
-     style="width:100%;font-size:28px;padding:16px 18px;border-radius:8px;border:3px solid #fff;background:#292332;color:#fff;outline:none">
-   <div id="searchResults" class="grid" style="margin-top:25px"></div>
+  <input id="searchInput" autocomplete="off" placeholder="Type an app name..."
+   style="width:100%;font-size:28px;padding:16px 18px;border-radius:8px;border:3px solid #fff;background:#292332;color:#fff;outline:none">
+  <div id="searchResults" class="grid" style="margin-top:25px"></div>
  </div>
  <div class="foot">Type to search • ↑ ↓ Select • Enter Open • Delete = Back</div>
 </section>
 
-<section id="settings" class="screen"><div class="brand">GAVIN OS <span id="settingsLabel">Settings</span></div><h1 id="settingsTitle">Settings</h1><div id="settingsList"></div><div class="foot">↑ ↓ Select • Enter Open • Home = Home</div></section>
-<section id="language" class="screen"><div class="brand">GAVIN OS <span id="languageLabel">Language</span></div><h1 id="languageTitle">Choose language</h1><div id="languageList" class="list"></div></section>
-<section id="wallpaper" class="screen"><div class="brand">GAVIN OS <span id="wallpaperLabel">Wallpaper</span></div><h1 id="wallpaperTitle">Wallpaper</h1><div id="colors"></div></section>
-<section id="music" class="screen"><div class="brand">GAVIN OS <span id="musicLabel">Background music</span></div><h1 id="musicTitle">Background music</h1><div id="musicList" class="list"></div></section>
+<section id="settings" class="screen">
+ <div class="brand">GAVIN OS <span id="settingsLabel">Settings</span></div>
+ <h1 id="settingsTitle">Settings</h1>
+ <div id="settingsList"></div>
+ <div class="foot">↑ ↓ Select • Enter Open • Home = Home</div>
+</section>
+
+<section id="language" class="screen">
+ <div class="brand">GAVIN OS <span id="languageLabel">Language</span></div>
+ <h1 id="languageTitle">Choose language</h1>
+ <div id="languageList" class="list"></div>
+</section>
+
+<section id="wallpaper" class="screen">
+ <div class="brand">GAVIN OS <span id="wallpaperLabel">Wallpaper</span></div>
+ <h1 id="wallpaperTitle">Wallpaper</h1>
+ <div id="colors"></div>
+</section>
+
+<section id="music" class="screen">
+ <div class="brand">GAVIN OS <span id="musicLabel">Background music</span></div>
+ <h1 id="musicTitle">Background music</h1>
+ <div id="musicList" class="list"></div>
+</section>
 
 <script>
-const L=[["English","Home","Settings","Language","Wallpaper","Background music"],["Español","Inicio","Configuración","Idioma","Fondo","Música de fondo"],["Français","Accueil","Paramètres","Langue","Fond","Musique de fond"],["Deutsch","Startseite","Einstellungen","Sprache","Hintergrund","Hintergrundmusik"]];
-const C=[["Purple","#17131f"],["Red","#241010"],["Blue","#0d1726"],["Green","#0d2117"],["Orange","#26170d"],["Pink","#24101d"],["Teal","#0b2020"],["Dark","#090909"],["Yellow","#211d08"]];
-const M=["Off","Retro Arcade","Rainy Pixel","Classic TV","Night Drive"];
-const apps=[
-["▶️","YouTube","https://www.youtube.com/"],["🎵","Spotify","https://open.spotify.com/"],["🌐","Google","https://www.google.com/"],["💬","Reddit","https://www.reddit.com/"],
-["🎮","Roblox","https://www.roblox.com/"],["🎬","Netflix","https://www.netflix.com/"],["📷","Instagram","https://www.instagram.com/"],["🎵","TikTok","https://www.tiktok.com/"],
-["🛒","Store","https://www.walmart.com/"],["🎮","Games",""],["⚙️","Settings",""]
+const L=[
+ ["English","Home","Settings","Language","Wallpaper","Background music"],
+ ["Español","Inicio","Configuración","Idioma","Fondo","Música de fondo"],
+ ["Français","Accueil","Paramètres","Langue","Fond","Musique de fond"],
+ ["Deutsch","Startseite","Einstellungen","Sprache","Hintergrund","Hintergrundmusik"]
 ];
-let lang=Number(localStorage.gavinLang||0),color=Number(localStorage.gavinColor||0),music=Number(localStorage.gavinMusic||0);
-let ai=0,si=0,li=0,ci=color,mi=music,screen="loading",railIndex=0,focus="apps",searchIndex=0;
 
-function S(x){document.querySelectorAll(".screen").forEach(e=>e.classList.remove("on"));document.getElementById(x).classList.add("on");screen=x}
-function home(){S("home");focus="apps";ai=0;railIndex=0;draw()}
-function H(a,i){a.forEach((e,n)=>e.classList.toggle("sel",n===i))}
-const UI=[
- {start:"Let's get started",home:"Home",search:"Search",settings:"Settings",follow:"FOLLOW ME",welcome:"Welcome to Gavin OS",sub:"Your apps, your way.",apps:"My Apps",choose:"Choose language",wallpaper:"Wallpaper",music:"Background music",searchHint:"Type an app name..."},
- {start:"Empecemos",home:"Inicio",search:"Buscar",settings:"Configuración",follow:"SÍGUEME",welcome:"Bienvenido a Gavin OS",sub:"Tus aplicaciones, a tu manera.",apps:"Mis aplicaciones",choose:"Elegir idioma",wallpaper:"Fondo",music:"Música de fondo",searchHint:"Escribe el nombre de una aplicación..."},
- {start:"Commençons",home:"Accueil",search:"Recherche",settings:"Paramètres",follow:"SUIVEZ-MOI",welcome:"Bienvenue sur Gavin OS",sub:"Vos applications, à votre façon.",apps:"Mes applications",choose:"Choisir la langue",wallpaper:"Fond",music:"Musique de fond",searchHint:"Saisissez le nom d'une application..."},
- {start:"Los geht's",home:"Startseite",search:"Suche",settings:"Einstellungen",follow:"FOLGE MIR",welcome:"Willkommen bei Gavin OS",sub:"Deine Apps, deine Art.",apps:"Meine Apps",choose:"Sprache auswählen",wallpaper:"Hintergrund",music:"Hintergrundmusik",searchHint:"App-Namen eingeben..."}
+const C=[
+ ["Purple","#17131f"],["Red","#241010"],["Blue","#0d1726"],
+ ["Green","#0d2117"],["Orange","#26170d"],["Pink","#24101d"],
+ ["Teal","#0b2020"],["Dark","#090909"],["Yellow","#211d08"]
 ];
+
+const M=["Off","Retro Arcade","Rainy Pixel","Classic TV","Night Drive"];
+
+const apps=[
+ ["▶️","YouTube","https://www.youtube.com/"],
+ ["🎵","Spotify","https://open.spotify.com/"],
+ ["🌐","Google","https://www.google.com/"],
+ ["💬","Reddit","https://www.reddit.com/"],
+ ["🎮","Roblox","https://www.roblox.com/"],
+ ["🎬","Netflix","https://www.netflix.com/"],
+ ["📷","Instagram","https://www.instagram.com/"],
+ ["🎵","TikTok","https://www.tiktok.com/"],
+ ["🛒","Store","https://www.walmart.com/"],
+ ["🎮","Games",""],
+ ["⚙️","Settings",""]
+];
+
+let lang=Number(localStorage.gavinLang||0);
+let color=Number(localStorage.gavinColor||0);
+let music=Number(localStorage.gavinMusic||0);
+
+let ai=0,si=0,li=0,ci=color,mi=music;
+let screen="loading",railIndex=0,focus="apps",searchIndex=0;
+
+function S(x){
+ document.querySelectorAll(".screen").forEach(e=>e.classList.remove("on"));
+ document.getElementById(x).classList.add("on");
+ screen=x;
+}
+
+function home(){
+ S("home");
+ focus="apps";
+ ai=0;
+ railIndex=0;
+ draw();
+}
+
+function openSettingsItem(){
+ if(si===0){
+  li=lang;
+  S("language");
+ }else if(si===1){
+  ci=color;
+  S("wallpaper");
+ }else if(si===2){
+  mi=music;
+  S("music");
+ }
+ draw();
+}
+
+function H(a,i){
+ a.forEach((e,n)=>e.classList.toggle("sel",n===i));
+}
+
+const UI=[
+ {
+  start:"Let's get started",home:"Home",search:"Search",
+  settings:"Settings",follow:"FOLLOW ME",
+  welcome:"Welcome to Gavin OS",sub:"Your apps, your way.",
+  apps:"My Apps",choose:"Choose language",
+  wallpaper:"Wallpaper",music:"Background music",
+  searchHint:"Type an app name..."
+ },
+ {
+  start:"Empecemos",home:"Inicio",search:"Buscar",
+  settings:"Configuración",follow:"SÍGUEME",
+  welcome:"Bienvenido a Gavin OS",
+  sub:"Tus aplicaciones, a tu manera.",
+  apps:"Mis aplicaciones",choose:"Elegir idioma",
+  wallpaper:"Fondo",music:"Música de fondo",
+  searchHint:"Escribe el nombre de una aplicación..."
+ },
+ {
+  start:"Commençons",home:"Accueil",search:"Recherche",
+  settings:"Paramètres",follow:"SUIVEZ-MOI",
+  welcome:"Bienvenue sur Gavin OS",
+  sub:"Vos applications, à votre façon.",
+  apps:"Mes applications",choose:"Choisir la langue",
+  wallpaper:"Fond",music:"Musique de fond",
+  searchHint:"Saisissez le nom d'une application..."
+ },
+ {
+  start:"Los geht's",home:"Startseite",search:"Suche",
+  settings:"Einstellungen",follow:"FOLGE MIR",
+  welcome:"Willkommen bei Gavin OS",
+  sub:"Deine Apps, deine Art.",
+  apps:"Meine Apps",choose:"Sprache auswählen",
+  wallpaper:"Hintergrund",music:"Hintergrundmusik",
+  searchHint:"App-Namen eingeben..."
+ }
+];
+
+function getSearchResults(){
+ const q=(document.getElementById("searchInput")?.value||"").toLowerCase().trim();
+ return apps.filter(x=>x[1].toLowerCase().includes(q));
+}
+
 function draw(){
  const u=UI[lang]||UI[0];
- document.body.style.background=C[color][1];
- if(document.getElementById("setupLabel"))setupLabel.textContent="• "+L[lang][3];
- if(document.getElementById("startTitle"))startTitle.textContent=u.start;
- if(document.getElementById("homeLabel"))homeLabel.textContent=u.home;
- if(document.getElementById("navHome"))navHome.textContent=u.home;
- if(document.getElementById("navSearch"))navSearch.textContent=u.search;
- if(document.getElementById("navSettings"))navSettings.textContent=u.settings;
- if(document.getElementById("navFollow"))navFollow.textContent=u.follow;
- if(document.getElementById("heroTitle"))heroTitle.textContent=u.welcome;
- if(document.getElementById("heroSub"))heroSub.textContent=u.sub;
- if(document.getElementById("appsTitle"))appsTitle.textContent=u.apps;
- if(document.getElementById("settingsLabel"))settingsLabel.textContent=u.settings;
- if(document.getElementById("settingsTitle"))settingsTitle.textContent=u.settings;
- if(document.getElementById("languageLabel"))languageLabel.textContent=L[lang][3];
- if(document.getElementById("languageTitle"))languageTitle.textContent=u.choose;
- if(document.getElementById("wallpaperLabel"))wallpaperLabel.textContent=L[lang][4];
- if(document.getElementById("wallpaperTitle"))wallpaperTitle.textContent=u.wallpaper;
- if(document.getElementById("musicLabel"))musicLabel.textContent=L[lang][5];
- if(document.getElementById("musicTitle"))musicTitle.textContent=u.music;
- if(document.getElementById("searchInput"))searchInput.placeholder=u.searchHint;
- document.getElementById("langs").innerHTML=L.map((x,i)=>`<div class="item ${i===li?"sel":""}">${x[0]}</div>`).join("");
- document.getElementById("languageList").innerHTML=L.map((x,i)=>`<div class="item ${i===li?"sel":""}">${x[0]}</div>`).join("");
- document.getElementById("settingsList").innerHTML=[
- [L[lang][3],L[lang][0]],[L[lang][4],C[color][0]],[L[lang][5],M[music]]
- ].map((x,i)=>`<div class="row ${i===si?"sel":""}"><span>${x[0]}</span><span>${x[1]}</span></div>`).join("");
- document.getElementById("colors").innerHTML=C.map((x,i)=>`<span class="sw ${i===ci?"sel":""}" style="background:${x[1]}"></span>`).join("");
- document.getElementById("musicList").innerHTML=M.map((x,i)=>`<div class="item ${i===mi?"sel":""}">${x}</div>`).join("");
- document.getElementById("apps").innerHTML=apps.map((x,i)=>`<div class="app ${i===ai&&focus==="apps"?"sel":""}"><div class="icon">${x[0]}</div><div class="name">${x[1]}</div></div>`).join("");
- const q=(document.getElementById("searchInput")?.value||"").toLowerCase().trim();
- const results=apps.filter(x=>x[1].toLowerCase().includes(q));
- if(document.getElementById("searchResults")){
-   document.getElementById("searchResults").innerHTML=results.length
-    ? results.map((x,i)=>`<div class="app ${i===searchIndex?"sel":""}"><div class="icon">${x[0]}</div><div class="name">${x[1]}</div></div>`).join("")
-    : '<div style="opacity:.65;padding:20px">No Gavin OS app found.</div>';
- }
 
- document.querySelectorAll(".nav").forEach((x,i)=>x.classList.toggle("sel",i===railIndex&&focus==="rail"));
+ document.body.style.background=C[color][1];
+
+ setupLabel.textContent="• "+L[lang][3];
+ startTitle.textContent=u.start;
+ homeLabel.textContent=u.home;
+
+ navHome.textContent=u.home;
+ navSearch.textContent=u.search;
+ navSettings.textContent=u.settings;
+ navFollow.textContent=u.follow;
+
+ heroTitle.textContent=u.welcome;
+ heroSub.textContent=u.sub;
+ appsTitle.textContent=u.apps;
+
+ settingsLabel.textContent=u.settings;
+ settingsTitle.textContent=u.settings;
+
+ languageLabel.textContent=L[lang][3];
+ languageTitle.textContent=u.choose;
+
+ wallpaperLabel.textContent=L[lang][4];
+ wallpaperTitle.textContent=u.wallpaper;
+
+ musicLabel.textContent=L[lang][5];
+ musicTitle.textContent=u.music;
+
+ searchInput.placeholder=u.searchHint;
+
+ document.getElementById("langs").innerHTML=L.map((x,i)=>
+  `<div class="item ${i===li?"sel":""}" data-index="${i}">${x[0]}</div>`
+ ).join("");
+
+ document.getElementById("languageList").innerHTML=L.map((x,i)=>
+  `<div class="item ${i===li?"sel":""}" data-index="${i}">${x[0]}</div>`
+ ).join("");
+
+ document.getElementById("settingsList").innerHTML=[
+  [L[lang][3],L[lang][0]],
+  [L[lang][4],C[color][0]],
+  [L[lang][5],M[music]]
+ ].map((x,i)=>
+  `<div class="row ${i===si?"sel":""}" data-index="${i}">
+   <span>${x[0]}</span><span>${x[1]}</span>
+  </div>`
+ ).join("");
+
+ document.getElementById("colors").innerHTML=C.map((x,i)=>
+  `<span class="sw ${i===ci?"sel":""}" data-index="${i}" style="background:${x[1]}" title="${x[0]}"></span>`
+ ).join("");
+
+ document.getElementById("musicList").innerHTML=M.map((x,i)=>
+  `<div class="item ${i===mi?"sel":""}" data-index="${i}">${x}</div>`
+ ).join("");
+
+ document.getElementById("apps").innerHTML=apps.map((x,i)=>
+  `<div class="app ${i===ai&&focus==="apps"?"sel":""}" data-index="${i}">
+   <div class="icon">${x[0]}</div>
+   <div class="name">${x[1]}</div>
+  </div>`
+ ).join("");
+
+ const results=getSearchResults();
+
+ document.getElementById("searchResults").innerHTML=results.length
+  ?results.map((x,i)=>
+   `<div class="app ${i===searchIndex?"sel":""}" data-index="${i}">
+    <div class="icon">${x[0]}</div>
+    <div class="name">${x[1]}</div>
+   </div>`
+  ).join("")
+  :'<div style="opacity:.65;padding:20px">No Gavin OS app found.</div>';
+
+ document.querySelectorAll(".nav").forEach((x,i)=>
+  x.classList.toggle("sel",i===railIndex&&focus==="rail")
+ );
 }
+
 function launchApp(item){
- if(item[2])window.open(item[2],"_blank");
- else if(item[1]==="Settings"){si=0;S("settings");draw()}
-}
-function openApp(){launchApp(apps[ai])}
-function openSearchResult(){
- const q=(document.getElementById("searchInput")?.value||"").toLowerCase().trim();
- const results=apps.filter(x=>x[1].toLowerCase().includes(q));
- if(results[searchIndex]) launchApp(results[searchIndex]);
-}
-document.addEventListener("click",e=>{
- const item=e.target.closest("#langs .item, #languageList .item");
  if(!item)return;
- const list=item.parentElement;
- const i=[...list.children].indexOf(item);
- if(i<0)return;
- li=i;
- if(list.id==="langs"){lang=li;localStorage.gavinLang=lang;home();}
- else {lang=li;localStorage.gavinLang=lang;S("settings");draw();}
-});
-document.onkeydown=e=>{
- if(e.key==="Home"){e.preventDefault();home();return}
- if(screen==="loading"||screen==="welcome")return;
- if(screen==="setup"){
-  if(e.key==="ArrowDown")li=Math.min(3,li+1);if(e.key==="ArrowUp")li=Math.max(0,li-1);
-  if(e.key==="Enter"){lang=li;localStorage.gavinLang=lang;home()}draw();return;
+
+ if(item[2]){
+  window.open(item[2],"_blank");
+ }else if(item[1]==="Settings"){
+  si=0;
+  S("settings");
+  draw();
  }
- if(screen==="home"){
-  if(focus==="apps"){
-    const col=ai%4, row=Math.floor(ai/4);
-    if(e.key==="ArrowRight") ai=Math.min(apps.length-1,ai+1);
-    else if(e.key==="ArrowLeft"){
-      if(col===0){focus="rail";railIndex=Math.min(3,row)}
-      else ai=Math.max(0,ai-1);
-    } else if(e.key==="ArrowDown") ai=Math.min(apps.length-1,ai+4);
-    else if(e.key==="ArrowUp"){
-      if(row===0){focus="rail";railIndex=Math.min(3,col)}
-      else ai=Math.max(0,ai-4);
-    } else if(e.key==="Enter") openApp();
-  } else {
-    if(e.key==="ArrowDown") railIndex=Math.min(3,railIndex+1);
-    else if(e.key==="ArrowUp") railIndex=Math.max(0,railIndex-1);
-    else if(e.key==="ArrowRight" || e.key==="Enter"){
-      if(railIndex===0){focus="apps";ai=0;}
-      else if(railIndex===1){searchIndex=0;S("search");setTimeout(()=>document.getElementById("searchInput").focus(),0);}
-      else if(railIndex===2){si=0;S("settings");}
-      else if(railIndex===3){window.open("https://www.tiktok.com/@funkojamesrants","_blank");}
-    }
-  }
-  draw();return;
- }
- if(screen==="search"){
-  if(e.key==="Delete" || e.key==="Escape"){home();return;}
-  if(e.key==="ArrowDown"){searchIndex++;draw();return;}
-  if(e.key==="ArrowUp"){searchIndex=Math.max(0,searchIndex-1);draw();return;}
-  if(e.key==="Enter"){openSearchResult();return;}
+}
+
+function openApp(){
+ launchApp(apps[ai]);
+}
+
+function openSearchResult(){
+ const results=getSearchResults();
+ if(results[searchIndex])launchApp(results[searchIndex]);
+}
+
+/* ALL TOUCHSCREEN CONTROLS */
+document.addEventListener("click",e=>{
+
+ // Setup language selection
+ const setupLanguage=e.target.closest("#langs .item");
+ if(setupLanguage){
+  li=Number(setupLanguage.dataset.index);
+  lang=li;
+  localStorage.gavinLang=lang;
+  home();
   return;
  }
+
+ // Language selection inside Settings
+ const languageItem=e.target.closest("#languageList .item");
+ if(languageItem){
+  li=Number(languageItem.dataset.index);
+  lang=li;
+  localStorage.gavinLang=lang;
+  S("settings");
+  draw();
+  return;
+ }
+
+ // Home navigation rail
+ const nav=e.target.closest(".nav");
+ if(nav){
+  if(nav.id==="navHome"){
+   home();
+  }else if(nav.id==="navSearch"){
+   searchIndex=0;
+   S("search");
+   draw();
+   setTimeout(()=>searchInput.focus(),50);
+  }else if(nav.id==="navSettings"){
+   si=0;
+   S("settings");
+   draw();
+  }else if(nav.id==="navFollow"){
+   window.open("https://www.tiktok.com/@funkojamesrants","_blank");
+  }
+  return;
+ }
+
+ // Home app tiles
+ const appTile=e.target.closest("#apps .app");
+ if(appTile){
+  ai=Number(appTile.dataset.index);
+  draw();
+  launchApp(apps[ai]);
+  return;
+ }
+
+ // Settings rows
+ const settingRow=e.target.closest("#settingsList .row");
+ if(settingRow){
+  si=Number(settingRow.dataset.index);
+  openSettingsItem();
+  return;
+ }
+
+ // Wallpaper choices
+ const wallpaperChoice=e.target.closest("#colors .sw");
+ if(wallpaperChoice){
+  ci=Number(wallpaperChoice.dataset.index);
+  color=ci;
+  localStorage.gavinColor=color;
+  draw();
+  return;
+ }
+
+ // Background music choices
+ const musicChoice=e.target.closest("#musicList .item");
+ if(musicChoice){
+  mi=Number(musicChoice.dataset.index);
+  music=mi;
+  localStorage.gavinMusic=music;
+  draw();
+  return;
+ }
+
+ // Search result tiles
+ const searchTile=e.target.closest("#searchResults .app");
+ if(searchTile){
+  searchIndex=Number(searchTile.dataset.index);
+  draw();
+  openSearchResult();
+  return;
+ }
+});
+
+/* PC KEYBOARD CONTROLS */
+document.onkeydown=e=>{
+ if(e.key==="Home"){
+  e.preventDefault();
+  home();
+  return;
+ }
+
+ if(screen==="loading"||screen==="welcome")return;
+
+ if(screen==="setup"){
+  if(e.key==="ArrowDown")li=Math.min(3,li+1);
+  if(e.key==="ArrowUp")li=Math.max(0,li-1);
+  if(e.key==="Enter"){
+   lang=li;
+   localStorage.gavinLang=lang;
+   home();
+  }
+  draw();
+  return;
+ }
+
+ if(screen==="home"){
+  if(focus==="apps"){
+   const col=ai%4;
+   const row=Math.floor(ai/4);
+
+   if(e.key==="ArrowRight")ai=Math.min(apps.length-1,ai+1);
+   else if(e.key==="ArrowLeft"){
+    if(col===0){
+     focus="rail";
+     railIndex=Math.min(3,row);
+    }else{
+     ai=Math.max(0,ai-1);
+    }
+   }else if(e.key==="ArrowDown"){
+    ai=Math.min(apps.length-1,ai+4);
+   }else if(e.key==="ArrowUp"){
+    if(row===0){
+     focus="rail";
+     railIndex=Math.min(3,col);
+    }else{
+     ai=Math.max(0,ai-4);
+    }
+   }else if(e.key==="Enter"){
+    openApp();
+   }
+  }else{
+   if(e.key==="ArrowDown")railIndex=Math.min(3,railIndex+1);
+   else if(e.key==="ArrowUp")railIndex=Math.max(0,railIndex-1);
+   else if(e.key==="ArrowRight"||e.key==="Enter"){
+    if(railIndex===0){
+     focus="apps";
+     ai=0;
+    }else if(railIndex===1){
+     searchIndex=0;
+     S("search");
+     setTimeout(()=>searchInput.focus(),0);
+    }else if(railIndex===2){
+     si=0;
+     S("settings");
+    }else if(railIndex===3){
+     window.open("https://www.tiktok.com/@funkojamesrants","_blank");
+    }
+   }
+  }
+  draw();
+  return;
+ }
+
+ if(screen==="search"){
+  if(e.key==="Delete"||e.key==="Escape"){
+   home();
+   return;
+  }
+  if(e.key==="ArrowDown"){
+   searchIndex=Math.min(getSearchResults().length-1,searchIndex+1);
+   searchIndex=Math.max(0,searchIndex);
+   draw();
+   return;
+  }
+  if(e.key==="ArrowUp"){
+   searchIndex=Math.max(0,searchIndex-1);
+   draw();
+   return;
+  }
+  if(e.key==="Enter"){
+   openSearchResult();
+   return;
+  }
+  return;
+ }
+
  if(screen==="settings"){
-  if(e.key==="Delete" || e.key==="Escape" || e.key==="Backspace"){home();return;}
+  if(e.key==="Delete"||e.key==="Escape"||e.key==="Backspace"){
+   home();
+   return;
+  }
   if(e.key==="ArrowDown")si=Math.min(2,si+1);
   else if(e.key==="ArrowUp")si=Math.max(0,si-1);
-  else if(e.key==="Enter"){
-    if(si===0){li=lang;S("language");}
-    else if(si===1){ci=color;S("wallpaper");}
-    else if(si===2){mi=music;S("music");}
-  }
-  draw();return;
+  else if(e.key==="Enter")openSettingsItem();
+  draw();
+  return;
  }
+
  if(screen==="language"){
-  if(e.key==="Delete" || e.key==="Escape" || e.key==="Backspace"){S("settings");draw();return;}
-  if(e.key==="ArrowDown")li=Math.min(3,li+1);if(e.key==="ArrowUp")li=Math.max(0,li-1);
-  if(e.key==="Enter"){lang=li;localStorage.gavinLang=lang;S("settings")}draw();return;
+  if(e.key==="Delete"||e.key==="Escape"||e.key==="Backspace"){
+   S("settings");
+   draw();
+   return;
+  }
+  if(e.key==="ArrowDown")li=Math.min(3,li+1);
+  if(e.key==="ArrowUp")li=Math.max(0,li-1);
+  if(e.key==="Enter"){
+   lang=li;
+   localStorage.gavinLang=lang;
+   S("settings");
+  }
+  draw();
+  return;
  }
+
  if(screen==="wallpaper"){
-  if(e.key==="Delete" || e.key==="Escape" || e.key==="Backspace"){S("settings");draw();return;}
-  if(e.key==="ArrowRight")ci=Math.min(C.length-1,ci+1);if(e.key==="ArrowLeft")ci=Math.max(0,ci-1);
-  if(e.key==="Enter"){color=ci;localStorage.gavinColor=color}draw();return;
+  if(e.key==="Delete"||e.key==="Escape"||e.key==="Backspace"){
+   S("settings");
+   draw();
+   return;
+  }
+  if(e.key==="ArrowRight")ci=Math.min(C.length-1,ci+1);
+  if(e.key==="ArrowLeft")ci=Math.max(0,ci-1);
+  if(e.key==="Enter"){
+   color=ci;
+   localStorage.gavinColor=color;
+  }
+  draw();
+  return;
  }
+
  if(screen==="music"){
-  if(e.key==="Delete" || e.key==="Escape" || e.key==="Backspace"){S("settings");draw();return;}
-  if(e.key==="ArrowDown")mi=Math.min(M.length-1,mi+1);if(e.key==="ArrowUp")mi=Math.max(0,mi-1);
-  if(e.key==="Enter"){music=mi;localStorage.gavinMusic=music}draw();return;
+  if(e.key==="Delete"||e.key==="Escape"||e.key==="Backspace"){
+   S("settings");
+   draw();
+   return;
+  }
+  if(e.key==="ArrowDown")mi=Math.min(M.length-1,mi+1);
+  if(e.key==="ArrowUp")mi=Math.max(0,mi-1);
+  if(e.key==="Enter"){
+   music=mi;
+   localStorage.gavinMusic=music;
+  }
+  draw();
+  return;
  }
 };
-let p=0;const timer=setInterval(()=>{p=Math.min(100,p+25);bar.style.width=p+"%";pct.textContent=p+"%";if(p===100){clearInterval(timer);setTimeout(()=>{S("welcome");requestAnimationFrame(()=>welcomeText.style.opacity="1");setTimeout(()=>{S("setup");draw()},2800)},120)}},90);
-document.addEventListener("input",e=>{if(e.target&&e.target.id==="searchInput"){searchIndex=0;draw()}});
+
+/* Loading screen */
+let p=0;
+const timer=setInterval(()=>{
+ p=Math.min(100,p+25);
+ bar.style.width=p+"%";
+ pct.textContent=p+"%";
+
+ if(p===100){
+  clearInterval(timer);
+  setTimeout(()=>{
+   S("welcome");
+   requestAnimationFrame(()=>welcomeText.style.opacity="1");
+
+   setTimeout(()=>{
+    S("setup");
+    draw();
+   },2800);
+  },120);
+ }
+},90);
+
+/* Search updates */
+document.addEventListener("input",e=>{
+ if(e.target&&e.target.id==="searchInput"){
+  searchIndex=0;
+  draw();
+ }
+});
+
+/* Clock */
 function updateDateTime(){
  const now=new Date();
- clock.textContent=now.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
- day.textContent=now.toLocaleDateString([],{weekday:"long",month:"short",day:"numeric"});
+ clock.textContent=now.toLocaleTimeString([],{
+  hour:"numeric",minute:"2-digit"
+ });
+ day.textContent=now.toLocaleDateString([],{
+  weekday:"long",month:"short",day:"numeric"
+ });
 }
+
 updateDateTime();
 setInterval(updateDateTime,1000);
 draw();
