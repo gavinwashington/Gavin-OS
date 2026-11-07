@@ -35,12 +35,9 @@ body{background:#17131f;color:#fff;font-family:Arial,Helvetica,sans-serif}
 #bar{height:100%;width:0;background:#fff}.pct{margin-top:12px;opacity:.7}
 #welcomeText{font-size:clamp(28px,5vw,64px);opacity:0;transition:opacity 2.3s}
 .warning{color:#70ff91;font-weight:700;font-size:15px;max-width:760px;margin:15px auto 0;text-align:center}
-
-/* Touchscreen support */
 .nav,.app,.item,.row,.sw{cursor:pointer;touch-action:manipulation}
 .nav:active,.app:active,.item:active,.row:active,.sw:active{filter:brightness(1.3)}
 input{touch-action:manipulation}
-
 @media(max-width:700px){
  .screen{padding:22px 18px}
  .layout{grid-template-columns:115px 1fr;gap:12px}
@@ -74,7 +71,7 @@ input{touch-action:manipulation}
  <div class="brand">GAVIN OS <span id="setupLabel">• Language</span></div>
  <div style="text-align:center;margin-top:12vh">
   <h1 id="startTitle" style="font-size:42px;font-weight:400">Let's get started</h1>
-  <div class="warning">PC Keyboards also work check out the controls file on our github page</div>
+  <div class="warning">PC Keyboards also work. Check out the controls file on our GitHub page.</div>
   <div id="langs" class="list" style="margin:28px auto 0"></div>
  </div>
 </section>
@@ -207,10 +204,6 @@ function openSettingsItem(){
  draw();
 }
 
-function H(a,i){
- a.forEach((e,n)=>e.classList.toggle("sel",n===i));
-}
-
 const UI=[
  {
   start:"Let's get started",home:"Home",search:"Search",
@@ -335,6 +328,7 @@ function draw(){
  );
 }
 
+/* APP LAUNCHING */
 function launchApp(item){
  if(!item)return;
 
@@ -356,10 +350,9 @@ function openSearchResult(){
  if(results[searchIndex])launchApp(results[searchIndex]);
 }
 
-/* ALL TOUCHSCREEN CONTROLS */
+/* TOUCHSCREEN CONTROLS */
 document.addEventListener("click",e=>{
 
- // Setup language selection
  const setupLanguage=e.target.closest("#langs .item");
  if(setupLanguage){
   li=Number(setupLanguage.dataset.index);
@@ -369,7 +362,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Language selection inside Settings
  const languageItem=e.target.closest("#languageList .item");
  if(languageItem){
   li=Number(languageItem.dataset.index);
@@ -380,7 +372,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Home navigation rail
  const nav=e.target.closest(".nav");
  if(nav){
   if(nav.id==="navHome"){
@@ -400,7 +391,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Home app tiles
  const appTile=e.target.closest("#apps .app");
  if(appTile){
   ai=Number(appTile.dataset.index);
@@ -409,7 +399,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Settings rows
  const settingRow=e.target.closest("#settingsList .row");
  if(settingRow){
   si=Number(settingRow.dataset.index);
@@ -417,7 +406,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Wallpaper choices
  const wallpaperChoice=e.target.closest("#colors .sw");
  if(wallpaperChoice){
   ci=Number(wallpaperChoice.dataset.index);
@@ -427,7 +415,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Background music choices
  const musicChoice=e.target.closest("#musicList .item");
  if(musicChoice){
   mi=Number(musicChoice.dataset.index);
@@ -437,7 +424,6 @@ document.addEventListener("click",e=>{
   return;
  }
 
- // Search result tiles
  const searchTile=e.target.closest("#searchResults .app");
  if(searchTile){
   searchIndex=Number(searchTile.dataset.index);
@@ -602,7 +588,7 @@ document.onkeydown=e=>{
  }
 };
 
-/* Loading screen */
+/* LOADING SCREEN */
 let p=0;
 const timer=setInterval(()=>{
  p=Math.min(100,p+25);
@@ -623,7 +609,7 @@ const timer=setInterval(()=>{
  }
 },90);
 
-/* Search updates */
+/* SEARCH */
 document.addEventListener("input",e=>{
  if(e.target&&e.target.id==="searchInput"){
   searchIndex=0;
@@ -631,7 +617,7 @@ document.addEventListener("input",e=>{
  }
 });
 
-/* Clock */
+/* CLOCK */
 function updateDateTime(){
  const now=new Date();
  clock.textContent=now.toLocaleTimeString([],{
